@@ -2,7 +2,6 @@ package me.sudohippie.throttle.strategy.bucket;
 
 import me.sudohippie.throttle.strategy.ThrottleStrategy;
 import me.sudohippie.throttle.util.Assert;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,63 +15,44 @@ import java.util.concurrent.TimeUnit;
 public abstract class TokenBucketStrategy extends ThrottleStrategy {
 
     protected final long bucketTokenCapacity;
-	protected final long refillInterval;
 
-	// number of tokens in the bucket
-	protected long tokens = 0;
-	protected long nextRefillTime = 0;
+    protected final long refillInterval;
+
+    // number of tokens in the bucket
+    protected long tokens = 0;
+
+    protected long nextRefillTime = 0;
 
     protected TokenBucketStrategy(long bucketTokenCapacity, long refillInterval, TimeUnit refillIntervalTimeUnit) {
         Assert.isTrue(bucketTokenCapacity >= 0, "Bucket token capacity can not be negative");
-		Assert.isTrue(refillInterval >= 0, "Bucket refill interval can not be negative");
-
+        Assert.isTrue(refillInterval >= 0, "Bucket refill interval can not be negative");
         this.bucketTokenCapacity = bucketTokenCapacity;
-		this.refillInterval = refillIntervalTimeUnit.toMillis(refillInterval);
+        this.refillInterval = refillIntervalTimeUnit.toMillis(refillInterval);
     }
 
     @Override
     public synchronized boolean isThrottled() {
-        return isThrottled(1);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public synchronized boolean isThrottled(long n) {
-        // preconditions
-        Assert.isTrue(n >= 0, "Invalid argument less than 0");
-
-        // check whether there exist at least n tokens in bucket
-        if(getCurrentTokenCount() < n) return true;
-
-        tokens -= n;
-        return false;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-	@Override
+    @Override
     public long getCapacity() {
-        return bucketTokenCapacity;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     public synchronized long getCurrentTokenCount() {
-        updateTokens();
-        return tokens;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
-	@Override
-	public synchronized long timeToRelease(long n, TimeUnit timeUnit){
-		// preconditions
-		Assert.isTrue(n >= 0, "Invalid argument less than 0");
-		Assert.isTrue(timeUnit != null, "TimeUnit argument can not be null");
-
-		// check whether tokens exist
-		if(getCurrentTokenCount() >= n){
-			return 0L;
-		} else{
-			long timeToIntervalEnd = nextRefillTime - System.currentTimeMillis();
-			// edge case due to system slowness
-			if(timeToIntervalEnd < 0) return timeToRelease(n, timeUnit);
-			else return timeUnit.convert(timeToIntervalEnd, TimeUnit.MILLISECONDS);
-		}
-	}
+    @Override
+    public synchronized long timeToRelease(long n, TimeUnit timeUnit) {
+        throw new UnsupportedOperationException("STUB: not implemented");
+    }
 
     protected abstract void updateTokens();
 }

@@ -16,17 +16,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class FixedTokenBucketStrategy extends TokenBucketStrategy {
 
-	protected FixedTokenBucketStrategy(long bucketTokenCapacity, long refillInterval, TimeUnit refillIntervalTimeUnit) {
-		super(bucketTokenCapacity, refillInterval, refillIntervalTimeUnit);
-	}
+    protected FixedTokenBucketStrategy(long bucketTokenCapacity, long refillInterval, TimeUnit refillIntervalTimeUnit) {
+        super(bucketTokenCapacity, refillInterval, refillIntervalTimeUnit);
+    }
 
-	@Override
+    @Override
     protected void updateTokens() {
-        // refill bucket if current time has exceed next refill time
-        long currentTime = System.currentTimeMillis();
-        if(currentTime < nextRefillTime) return;
-
-        tokens = bucketTokenCapacity;
-        nextRefillTime = currentTime + refillInterval;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

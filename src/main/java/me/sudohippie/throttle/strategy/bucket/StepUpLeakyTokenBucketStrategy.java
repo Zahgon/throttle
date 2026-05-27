@@ -32,26 +32,6 @@ public class StepUpLeakyTokenBucketStrategy extends LeakyTokenBucketStrategy {
 
     @Override
     protected void updateTokens() {
-        long currentTime = System.currentTimeMillis();
-
-        // if current time has exceeded next refill interval,
-        if(currentTime >= nextRefillTime){
-            tokens = stepTokens;
-            lastActivityTime = currentTime;
-            nextRefillTime = currentTime + refillInterval;
-
-            return;
-        }
-
-        // calculate tokens at current step
-        long elapsedTimeSinceLastActivity = currentTime - lastActivityTime;
-        long elapsedStepsSinceLastActivity = elapsedTimeSinceLastActivity / stepInterval;
-        tokens += (elapsedStepsSinceLastActivity * stepTokens);
-
-        // check for bucket overflow
-        if(tokens > bucketTokenCapacity) tokens = bucketTokenCapacity;
-
-        // update last activity time
-        lastActivityTime = currentTime;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -31,24 +31,6 @@ public class StepDownLeakyTokenBucketStrategy extends LeakyTokenBucketStrategy {
 
     @Override
     protected void updateTokens() {
-        long currentTime = System.currentTimeMillis();
-
-        // if current time exceeds next refill time
-        if(currentTime >= nextRefillTime){
-            // set tokens to max
-            tokens = bucketTokenCapacity;
-            // calculate next refill time
-            nextRefillTime = currentTime + refillInterval;
-
-            return;
-        }
-        // calculate max tokens possible till end
-        long timeToNextRefill = nextRefillTime - currentTime;
-        long stepsToNextRefill = timeToNextRefill / stepInterval;
-        long maxPossibleTokens = stepsToNextRefill * stepTokens;
-        // edge case, if current time not at edge of step
-        if((timeToNextRefill % stepInterval) > 0) maxPossibleTokens += stepTokens;
-        // tokens must be lesser of current and max possible tokens
-        if(maxPossibleTokens < tokens) tokens = maxPossibleTokens;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
